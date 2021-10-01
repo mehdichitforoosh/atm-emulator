@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: atm-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/atm
+    username: postgres
+    password: postgres
+    hikari:
+      maximum-pool-size: 10
+      schema: public
