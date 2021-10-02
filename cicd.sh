@@ -35,16 +35,16 @@ done
 
 cd atm-emulator || exit
 
-echo "Change current directory to [${pwd}] \e[92mdone\e[0m"
+echo -e "Change current directory to [${pwd}] \e[92mdone\e[0m"
 
 echo "Start docker containers for project [${COMPOSE_PROJECT_NAME}] ..."
 docker-compose build
-echo "Build images \e[92mdone\e[0m"
+echo -e "Build images \e[92mdone\e[0m"
 
 docker-compose up -d --force-recreate --remove-orphans
-echo "Run containers \e[92mdone\e[0m"
+echo -e "Run containers \e[92mdone\e[0m"
 
 rm -rf ../atm-emulator/
-echo "Delete directory \e[92mdone\e[0m"
+echo -e "Delete directory \e[92mdone\e[0m"
 
 exit
