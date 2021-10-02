@@ -1,7 +1,15 @@
 spring:
   application:
     name: atm-service
+  jpa:
+    open-in-view: false
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
   datasource:
+    initialization-mode: always
+    continue-on-error: true
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/atm
