@@ -4,5 +4,6 @@ import com.energizeglobal.assignment.user.domain.User;
 
 public interface UserService {
 
-    User findOne(String userId);
+    User findOne(Long id);
+
 }
