@@ -1,0 +1,11 @@
+# Exclude target  folder
+/target/
+
+### Git Repository ###
+.git
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr

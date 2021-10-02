@@ -1,0 +1,49 @@
+version: '3.5'
+services:
+
+  pgsql-db-01:
+    image: postgres:9.6
+    hostname: pgsql-db-01
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=atm
+    command: [ "postgres","-c","logging_collector=on", "-c", "log_directory=/var/log/postgresql", "-c", "log_filename=postgresql-%Y-%m-%d_%H%M%S.log","-c","log_line_prefix='%a %u %e '" ]
+    expose:
+      - "5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/log/postgresql
+      - postgres-data:/home
+    networks:
+      default:
+        aliases:
+          - pgsql-db-01
+
+  atm-emulator-01:
+    build:
+      context: .
+    image: egs/atm-emulator
+    hostname: atm-emulator-01
+    environment:
+      - SPRING_APPLICATION_NAME=atm-emulator
+    command: [ "mvn", "spring-boot:run" ]
+    expose:
+      - "8080"
+    volumes:
+      - maven-home:/root/.m2
+    networks:
+      default:
+        aliases:
+          - atm-emulator-01
+
+volumes:
+  maven-home:
+    name: maven-home
+  postgres-data:
+    name: postgres-data
+
+networks:
+  default:
+    external:
+      name: services-network-01
