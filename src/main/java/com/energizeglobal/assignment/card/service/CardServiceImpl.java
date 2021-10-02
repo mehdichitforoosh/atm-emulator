@@ -26,24 +26,6 @@ public class CardServiceImpl implements CardService {
     }
 
     /**
-     * Find card by id
-     *
-     * @param id card id
-     * @return card
-     * @throws EmptyResultDataAccessException if card doesn't exist
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Card getById(Long id) {
-        logger.info("find one card by " + id);
-        Card card = cardRepository.findById(id);
-        if (card != null) {
-            return card;
-        }
-        throw new EmptyResultDataAccessException("card is empty.", 1);
-    }
-
-    /**
      * Find card by card number
      *
      * @param cardNumber card number

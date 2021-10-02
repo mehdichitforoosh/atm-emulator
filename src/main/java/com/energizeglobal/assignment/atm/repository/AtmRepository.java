@@ -2,7 +2,6 @@ package com.energizeglobal.assignment.atm.repository;
 
 import com.energizeglobal.assignment.atm.domain.Atm;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.Repository;
 
 /**
  * @author Mehdi Chitforoosh

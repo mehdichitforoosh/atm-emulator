@@ -2,6 +2,10 @@ package com.energizeglobal.assignment.atm.command;
 
 import com.energizeglobal.assignment.common.Command;
 
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ */
 public class AuthenticateCommand implements Command {
 
     private final String cardNumber;

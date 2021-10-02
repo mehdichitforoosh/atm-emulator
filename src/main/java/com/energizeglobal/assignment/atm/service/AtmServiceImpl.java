@@ -1,18 +1,15 @@
 package com.energizeglobal.assignment.atm.service;
 
-import com.energizeglobal.assignment.account.domain.Account;
 import com.energizeglobal.assignment.account.service.AccountService;
 import com.energizeglobal.assignment.atm.command.AuthenticateCommand;
 import com.energizeglobal.assignment.atm.command.DepositCashCommand;
 import com.energizeglobal.assignment.atm.command.TransferCashCommand;
 import com.energizeglobal.assignment.atm.command.WithdrawCashCommand;
-import com.energizeglobal.assignment.card.domain.Card;
 import com.energizeglobal.assignment.card.service.CardService;
 import com.energizeglobal.assignment.util.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -21,8 +18,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
 
 /**
  * @author Mehdi Chitforoosh
@@ -62,6 +57,7 @@ public class AtmServiceImpl implements AtmService {
             final String jwt = jwtTokenUtil.generateToken(userDetails);
             return jwt;
         } catch (AuthenticationException ex) {
+            //todo add block card for 3 times
             throw ex;
         }
     }
@@ -69,7 +65,7 @@ public class AtmServiceImpl implements AtmService {
     @Override
     @Transactional
     public void withdraw(WithdrawCashCommand command) {
-
+        // check cash dispense or atm amount and decrease
     }
 
     @Override
@@ -82,25 +78,6 @@ public class AtmServiceImpl implements AtmService {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void transfer(TransferCashCommand command) {
 
-    }
-
-    /**
-     * Get account balance by card number
-     *
-     * @param cardNumber card number
-     * @return balance
-     * @throws EmptyResultDataAccessException if card doesn't exist
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public BigDecimal getBalance(String cardNumber) {
-        logger.info("Get account balance by " + cardNumber);
-        Card card = cardService.getByCardNumber(cardNumber);
-        if (card != null) {
-            Account account = card.getAccount();
-            return account.getBalance();
-        }
-        throw new EmptyResultDataAccessException("card is empty.", 1);
     }
 
 }

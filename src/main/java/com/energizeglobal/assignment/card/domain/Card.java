@@ -24,6 +24,7 @@ public class Card {
     @Column(name = "expiration_date", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime expirationDate;
+    //todo add try on error
     @Column(name = "active", nullable = false)
     private Boolean active;
     @OneToOne

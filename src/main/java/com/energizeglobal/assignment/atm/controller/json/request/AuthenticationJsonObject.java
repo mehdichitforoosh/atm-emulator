@@ -3,6 +3,10 @@ package com.energizeglobal.assignment.atm.controller.json.request;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ */
 public class AuthenticationJsonObject {
 
     private final String cardNumber;

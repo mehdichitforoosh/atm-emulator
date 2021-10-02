@@ -9,11 +9,15 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
-@Service
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ */
+@Component
 public class JPAUserDetailsService implements UserDetailsService {
 
     private static final Logger logger = LoggerFactory.getLogger(JPAUserDetailsService.class);
@@ -29,7 +33,7 @@ public class JPAUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String cardNumber) throws UsernameNotFoundException {
         Card card = cardService.getByCardNumber(cardNumber);
         if (card == null) {
-            logger.debug("Query returned no results for card '" + cardNumber + "'");
+            logger.debug("No results for card '" + cardNumber + "'");
             throw new UsernameNotFoundException("Card number " + cardNumber + " not found");
         } else {
             String password = card.getPin();

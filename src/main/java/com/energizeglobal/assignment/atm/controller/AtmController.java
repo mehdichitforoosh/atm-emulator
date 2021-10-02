@@ -21,6 +21,8 @@ import com.energizeglobal.assignment.card.service.CardService;
 import com.energizeglobal.assignment.common.Command;
 import com.energizeglobal.assignment.exception.ValidationException;
 import com.energizeglobal.assignment.user.domain.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
@@ -37,8 +39,13 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.concurrent.Callable;
 
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ */
 @RestController
-@RequestMapping("/atm")
+@RequestMapping("/api/atm")
+@Api(value = "ATM Controller", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AtmController {
 
     private static final Logger logger = LoggerFactory.getLogger(AtmController.class);
@@ -47,7 +54,6 @@ public class AtmController {
     private final AccountService accountService;
     private final CardService cardService;
     private final AtmCommandValidator atmCommandValidator;
-
 
     @Autowired
     public AtmController(AtmService atmService
@@ -61,6 +67,7 @@ public class AtmController {
     }
 
     @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Authenticate with card number and pin", response = AuthenticatedJsonObject.class)
     public Callable<ResponseEntity<?>> authenticate(@RequestBody final AuthenticationJsonObject jsonObject) {
         logger.info("authenticate card ...");
         return () -> {
@@ -72,6 +79,7 @@ public class AtmController {
     }
 
     @GetMapping(value = "/account/info", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Get account information", response = AccountJsonObject.class)
     public Callable<ResponseEntity<?>> getAccountInfo(final Principal principal) {
         logger.info("Get account info ...");
         return () -> {
@@ -94,6 +102,7 @@ public class AtmController {
     }
 
     @GetMapping(value = "/account/balance", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Get account balance", response = BalanceJsonObject.class)
     public Callable<ResponseEntity<?>> getBalance(final Principal principal) {
         logger.info("Get balance ...");
         return () -> {
@@ -109,6 +118,7 @@ public class AtmController {
     }
 
     @PutMapping(value = "/deposit", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Deposit cash")
     public Callable<ResponseEntity<?>> doDeposit(@RequestBody final CashDepositJsonObject jsonObject, final Principal principal) {
         logger.info("Deposit cash ...");
         return () -> {
@@ -116,13 +126,10 @@ public class AtmController {
             UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
             UserDetails userDetails = (UserDetails) authenticationToken.getPrincipal();
             String cardNumber = userDetails.getUsername();
-            // Retrieve card entity
-            Card card = cardService.getByCardNumber(cardNumber);
-            Account account = card.getAccount();
             // Get current time
             DateTime currentDateTime = DateTime.now(DateTimeZone.UTC);
             // Add validation and service calls
-            DepositCashCommand command = new DepositCashCommand(account.getId(), jsonObject.getAmount(), currentDateTime);
+            DepositCashCommand command = new DepositCashCommand(cardNumber, jsonObject.getAmount(), currentDateTime);
             validate(command);
             atmService.deposit(command);
             return ResponseEntity.ok(null);
@@ -130,6 +137,7 @@ public class AtmController {
     }
 
     @PutMapping(value = "/withdrawal", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Withdraw cash")
     public Callable<ResponseEntity<?>> doWithdrawal(@RequestBody final CashWithdrawalJsonObject jsonObject, final Principal principal) {
         logger.info("Withdrawal cash ...");
         return () -> {
@@ -137,13 +145,10 @@ public class AtmController {
             UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
             UserDetails userDetails = (UserDetails) authenticationToken.getPrincipal();
             String cardNumber = userDetails.getUsername();
-            // Retrieve card entity
-            Card card = cardService.getByCardNumber(cardNumber);
-            Account account = card.getAccount();
             // Get current time
             DateTime currentDateTime = DateTime.now(DateTimeZone.UTC);
             // Add validation and service calls
-            WithdrawCashCommand command = new WithdrawCashCommand(account.getId(), jsonObject.getAmount(), currentDateTime);
+            WithdrawCashCommand command = new WithdrawCashCommand(cardNumber, jsonObject.getAmount(), currentDateTime);
             validate(command);
             atmService.withdraw(command);
             return ResponseEntity.ok(null);
@@ -151,9 +156,11 @@ public class AtmController {
     }
 
     @PutMapping(value = "/transfer", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Transfer cash")
     public Callable<ResponseEntity<?>> doTransfer(@RequestBody final CashTransferJsonObject jsonObject, final Principal principal) {
         logger.info("Transfer cash ...");
         return () -> {
+            // Get card number from security context
             UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
             UserDetails userDetails = (UserDetails) authenticationToken.getPrincipal();
             String cardNumber = userDetails.getUsername();

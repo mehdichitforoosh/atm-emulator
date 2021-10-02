@@ -5,12 +5,13 @@ import com.energizeglobal.assignment.atm.command.AuthenticateCommand;
 import com.energizeglobal.assignment.atm.command.DepositCashCommand;
 import com.energizeglobal.assignment.atm.command.TransferCashCommand;
 import com.energizeglobal.assignment.atm.command.WithdrawCashCommand;
-import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.math.BigDecimal;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Mehdi Chitforoosh
@@ -34,48 +35,51 @@ public class AtmCommandValidator implements Validator {
             AuthenticateCommand command = (AuthenticateCommand) o;
             String cardNumber = command.getCardNumber();
             String pin = command.getPin();
-//            checkCommonProperties(name, personnelId, tags, description, errors);
-            if (errors.hasErrors()) {
-                return;
-            }
+            checkCardNumber(cardNumber, errors);
+            checkPin(pin, errors);
         } else if (o instanceof WithdrawCashCommand) {
             WithdrawCashCommand command = (WithdrawCashCommand) o;
+            String cardNumber = command.getCardNumber();
             BigDecimal amount = command.getAmount();
-            DateTime date = command.getDate();
-//            checkCommonProperties(name, personnelId, tags, description, errors);
-            if (errors.hasErrors()) {
-                return;
-            }
+            checkCardNumber(cardNumber, errors);
+            checkAmount(amount, errors);
         } else if (o instanceof DepositCashCommand) {
             DepositCashCommand command = (DepositCashCommand) o;
+            String cardNumber = command.getCardNumber();
             BigDecimal amount = command.getAmount();
-            DateTime date = command.getDate();
-            // Low processing cost validation checks comes first
-//            checkCommonProperties(name, personnelId, tags, description, errors);
-            if (errors.hasErrors()) {
-                return;
-            }
+            checkCardNumber(cardNumber, errors);
+            checkAmount(amount, errors);
         } else if (o instanceof TransferCashCommand) {
             TransferCashCommand command = (TransferCashCommand) o;
             BigDecimal amount = command.getAmount();
+            String fromCardNumber = command.getFromCardNumber();
             String toCardNumber = command.getToCardNumber();
-            DateTime date = command.getDate();
+            checkCardNumber(fromCardNumber, errors);
+            checkCardNumber(toCardNumber, errors);
+            checkAmount(amount, errors);
         }
     }
 
-//    private void checkCommonProperties(String name, String personnelId, String[] tags, String description, Errors errors) {
-//        if (StringUtils.isNotEmpty(name)) {
-//            if (!(name.length() >= 2 && name.length() <= 30)) {
-//                errors.rejectValue("name", "invalid");
-//            }
-//        } else {
-//            errors.rejectValue("name", "invalid");
-//        }
-//        if (StringUtils.isNotEmpty(description)) {
-//            if (!(description.length() <= 2000)) {
-//                errors.rejectValue("description", "invalid");
-//            }
-//        }
-//    }
+    private void checkAmount(BigDecimal amount, Errors errors) {
+        if (!(amount.compareTo(BigDecimal.valueOf(0)) > 0)) {
+            errors.rejectValue("amount", "invalid");
+        }
+    }
+
+    private void checkCardNumber(String cardNumber, Errors errors) {
+        Pattern pattern = Pattern.compile("\\d{16}");
+        Matcher matcher = pattern.matcher(cardNumber);
+        if (!matcher.matches()) {
+            errors.rejectValue("cardNumber", "invalid");
+        }
+    }
+
+    private void checkPin(String pin, Errors errors) {
+        Pattern pattern = Pattern.compile("\\d{4}");
+        Matcher matcher = pattern.matcher(pin);
+        if (!matcher.matches()) {
+            errors.rejectValue("pin", "invalid");
+        }
+    }
 
 }

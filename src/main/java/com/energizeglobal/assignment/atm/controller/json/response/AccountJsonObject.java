@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ */
 public class AccountJsonObject {
 
     @JsonProperty(value = "accountNumber", required = true)
