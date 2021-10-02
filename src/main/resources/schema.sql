@@ -69,5 +69,19 @@ WITH (
 );
 ALTER TABLE cards
   OWNER TO postgres;
+-------------------------------------------------
+-- Table: atms
+CREATE TABLE atms
+(
+  id bigint NOT NULL,
+  atm_number character varying(10) NOT NULL,
+  available_cash numeric(19,2) NOT NULL,
+  CONSTRAINT atms_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE atms
+  OWNER TO postgres;
 
 

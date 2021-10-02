@@ -25,6 +25,10 @@ INSERT INTO cards (id,card_number,pin,expiration_date,active,account_id) VALUES 
 INSERT INTO cards (id,card_number,pin,expiration_date,active,account_id) VALUES (2,'9856342578325498','9345','2021-12-22 20:10:25-07',true,2);
 INSERT INTO cards (id,card_number,pin,expiration_date,active,account_id) VALUES (3,'8765342578323421','2364','2023-06-22 12:10:25-07',true,5);
 INSERT INTO cards (id,card_number,pin,expiration_date,active,account_id) VALUES (4,'2345879078321112','1178','2021-06-22 19:10:25-07',false,7);
+-- atm sample records
+INSERT INTO atms (id,atm_number,available_cash) VALUES (1,'100',10000000);
+INSERT INTO atms (id,atm_number,available_cash) VALUES (2,'101',50000000);
+INSERT INTO atms (id,atm_number,available_cash) VALUES (3,'101',10000);
 
 
 
