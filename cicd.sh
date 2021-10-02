@@ -35,7 +35,7 @@ done
 
 cd atm-emulator || exit
 
-echo -e "Change current directory to [${pwd}] \e[92mdone\e[0m"
+echo -e "Change current directory to [${CURRENT_DIRECTORY}] \e[92mdone\e[0m"
 
 echo "Start docker containers for project [${COMPOSE_PROJECT_NAME}] ..."
 docker-compose build
