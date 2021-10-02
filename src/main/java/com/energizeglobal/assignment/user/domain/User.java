@@ -2,6 +2,10 @@ package com.energizeglobal.assignment.user.domain;
 
 import javax.persistence.*;
 
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ */
 @Entity
 @Table(name = "users")
 public class User {

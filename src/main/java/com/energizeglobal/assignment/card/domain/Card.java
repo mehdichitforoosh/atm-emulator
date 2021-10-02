@@ -6,6 +6,10 @@ import org.joda.time.DateTime;
 
 import javax.persistence.*;
 
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ */
 @Entity
 @Table(name = "cards")
 public class Card {
@@ -18,9 +22,11 @@ public class Card {
     @Column(name = "pin", length = 4, nullable = false)
     private String pin;
     @Column(name = "expiration_date", nullable = false)
-    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime expirationDate;
-    @ManyToOne
+    @Column(name = "active", nullable = false)
+    private Boolean active;
+    @OneToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
@@ -58,6 +64,14 @@ public class Card {
 
     public void setExpirationDate(DateTime expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Account getAccount() {

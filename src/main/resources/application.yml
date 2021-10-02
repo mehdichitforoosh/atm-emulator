@@ -18,3 +18,5 @@ spring:
     hikari:
       maximum-pool-size: 10
       schema: public
+jwt:
+  secret: vasof!N+T&!C8eW&RaFE

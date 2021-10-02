@@ -12,12 +12,18 @@ import java.math.BigDecimal;
  */
 public final class DepositCashCommand implements Command {
 
+    private final Long accountId;
     private final BigDecimal amount;
     private final DateTime date;
 
-    public DepositCashCommand(BigDecimal amount, DateTime date) {
+    public DepositCashCommand(Long accountId, BigDecimal amount, DateTime date) {
+        this.accountId = accountId;
         this.amount = amount;
         this.date = date;
+    }
+
+    public Long getAccountId() {
+        return accountId;
     }
 
     public BigDecimal getAmount() {

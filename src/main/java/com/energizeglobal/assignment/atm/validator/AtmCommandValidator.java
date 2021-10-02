@@ -1,6 +1,7 @@
 package com.energizeglobal.assignment.atm.validator;
 
 
+import com.energizeglobal.assignment.atm.command.AuthenticateCommand;
 import com.energizeglobal.assignment.atm.command.DepositCashCommand;
 import com.energizeglobal.assignment.atm.command.TransferCashCommand;
 import com.energizeglobal.assignment.atm.command.WithdrawCashCommand;
@@ -11,20 +12,33 @@ import org.springframework.validation.Validator;
 
 import java.math.BigDecimal;
 
-
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ * Atm Command validator
+ */
 @Component
 public class AtmCommandValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return WithdrawCashCommand.class.equals(aClass)
+        return AuthenticateCommand.class.equals(aClass)
+                || WithdrawCashCommand.class.equals(aClass)
                 || DepositCashCommand.class.equals(aClass)
                 || TransferCashCommand.class.equals(aClass);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        if (o instanceof WithdrawCashCommand) {
+        if (o instanceof AuthenticateCommand) {
+            AuthenticateCommand command = (AuthenticateCommand) o;
+            String cardNumber = command.getCardNumber();
+            String pin = command.getPin();
+//            checkCommonProperties(name, personnelId, tags, description, errors);
+            if (errors.hasErrors()) {
+                return;
+            }
+        } else if (o instanceof WithdrawCashCommand) {
             WithdrawCashCommand command = (WithdrawCashCommand) o;
             BigDecimal amount = command.getAmount();
             DateTime date = command.getDate();

@@ -1,4 +1,4 @@
-package com.energizeglobal.assignment.atm.controller.json;
+package com.energizeglobal.assignment.atm.controller.json.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

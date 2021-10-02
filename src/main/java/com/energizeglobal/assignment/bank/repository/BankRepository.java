@@ -12,4 +12,6 @@ public interface BankRepository extends Repository<Bank, Long> {
 
     Bank findById(Long id);
 
+    Bank findByBranchNumber(String branchNumber);
+
 }

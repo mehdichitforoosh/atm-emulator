@@ -6,6 +6,10 @@ import com.energizeglobal.assignment.user.domain.User;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ */
 @Entity
 @Table(name = "accounts")
 public class Account {

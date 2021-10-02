@@ -1,13 +1,26 @@
 package com.energizeglobal.assignment.atm.service;
 
+import com.energizeglobal.assignment.atm.command.AuthenticateCommand;
+import com.energizeglobal.assignment.atm.command.DepositCashCommand;
+import com.energizeglobal.assignment.atm.command.TransferCashCommand;
+import com.energizeglobal.assignment.atm.command.WithdrawCashCommand;
+
 import java.math.BigDecimal;
 
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ */
 public interface AtmService {
 
-    void withdraw(BigDecimal amount);
+    String getToken(AuthenticateCommand command);
 
-    void deposit(BigDecimal amount);
+    void withdraw(WithdrawCashCommand command);
 
-    BigDecimal getBalance();
+    void deposit(DepositCashCommand command);
+
+    void transfer(TransferCashCommand command);
+
+    BigDecimal getBalance(String cardNumber);
 
 }

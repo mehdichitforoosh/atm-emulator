@@ -2,6 +2,10 @@ package com.energizeglobal.assignment.bank.domain;
 
 import javax.persistence.*;
 
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ */
 @Entity
 @Table(name = "banks")
 public class Bank {

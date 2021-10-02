@@ -13,17 +13,23 @@ import java.math.BigDecimal;
 public final class TransferCashCommand implements Command {
 
     private final BigDecimal amount;
+    private final String fromCardNumber;
     private final String toCardNumber;
     private final DateTime date;
 
-    public TransferCashCommand(BigDecimal amount, String toCardNumber, DateTime date) {
+    public TransferCashCommand(BigDecimal amount, String fromCardNumber, String toCardNumber, DateTime date) {
         this.amount = amount;
+        this.fromCardNumber = fromCardNumber;
         this.toCardNumber = toCardNumber;
         this.date = date;
     }
 
     public BigDecimal getAmount() {
         return amount;
+    }
+
+    public String getFromCardNumber() {
+        return fromCardNumber;
     }
 
     public String getToCardNumber() {
