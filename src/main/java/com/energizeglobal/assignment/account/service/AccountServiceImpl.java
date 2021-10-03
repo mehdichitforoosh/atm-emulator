@@ -25,6 +25,12 @@ public class AccountServiceImpl implements AccountService {
         this.accountRepository = accountRepository;
     }
 
+    /**
+     * Add amount to account balance
+     *
+     * @param amount
+     * @param accountId
+     */
     @Override
     @Transactional
     public void addAmountById(BigDecimal amount, Long accountId) {
@@ -32,6 +38,12 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.addAmountById(amount, accountId);
     }
 
+    /**
+     * Subtract amount from account balance
+     *
+     * @param amount
+     * @param accountId
+     */
     @Override
     @Transactional
     public void subtractAmountById(BigDecimal amount, Long accountId) {

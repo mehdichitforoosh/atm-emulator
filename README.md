@@ -32,9 +32,10 @@ You can see database shema in `src/main/resources/schema.sql` and initial data i
 
 - [x] Session management mechanism (Jwt)
 - [x] Validation
-- [x] Standard list of operations with ATM
+- [x] Standard list of operations with ATM (Deposit, Withdrawal, Transfer, Get information)
 - [ ] Having unit and Integration tests
 - [x] Having CI/CD configuration
 - [x] Having swagger configured
 - [x] Java doc comments
+- [x] Layered Architecture (Controller, Service, Repository, Validator)  
 - [x] Clean code
