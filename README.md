@@ -30,3 +30,11 @@ You can see database shema in `src/main/resources/schema.sql` and initial data i
 
 ** You can see API documentation with [swagger-ui](http://localhost:8080/swagger-ui.html)
 
+- [x] Session management mechanism (Jwt)
+- [x] Validation
+- [x] Standard list of operations with ATM
+- [ ] Having unit and Integration tests
+- [x] Having CI/CD configuration
+- [x] Having swagger configured
+- [x] Java doc comments
+- [x] Clean code
