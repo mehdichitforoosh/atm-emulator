@@ -41,9 +41,7 @@ volumes:
   maven-home:
     name: maven-home
   postgres-data:
-    name: postgres-data
 
 networks:
   default:
-    external:
-      name: services-network-01
+    name: services-network-02
