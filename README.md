@@ -8,7 +8,8 @@ At this time, the ATM provides the people good services especially the people ca
 1. Install [Docker Engine](https://docs.docker.com/engine/install/)
 2. Install [Docker Compose](https://docs.docker.com/compose/install/)
 3. Clone [Git URL](https://github.com/mehdichitforoosh/atm-emulator.git)
-4. `$./cicd.sh`
+4. `cd atm-emulator`
+5. `$./cicd.sh`
 
 ## How to run on local
 1. Clone [Git URL](https://github.com/mehdichitforoosh/atm-emulator.git)
@@ -17,6 +18,8 @@ At this time, the ATM provides the people good services especially the people ca
 4. `mvn spring-boot:run`
 
 If you want to run server locally, change the database url in `src/main/resources/application.yml` from `pgsql-db-01` to `localhost`.
+
+Spring Boot automatically create the schema and initialize it with sample data.
 
 You can see database shema in `src/main/resources/schema.sql` and initial data in `src/main/resources/data.sql`.
 
