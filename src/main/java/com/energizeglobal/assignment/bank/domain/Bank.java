@@ -5,6 +5,7 @@ import javax.persistence.*;
 /**
  * @author Mehdi Chitforoosh
  * @since 1.0.0
+ * Bank JPA entity
  */
 @Entity
 @Table(name = "banks")

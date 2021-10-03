@@ -12,14 +12,18 @@ import java.math.BigDecimal;
  */
 public final class WithdrawCashCommand implements Command {
 
+    private final Long atmId;
     private final String cardNumber;
     private final BigDecimal amount;
-    private final DateTime date;
 
-    public WithdrawCashCommand(String cardNumber, BigDecimal amount, DateTime date) {
+    public WithdrawCashCommand(Long atmId, String cardNumber, BigDecimal amount) {
+        this.atmId = atmId;
         this.cardNumber = cardNumber;
         this.amount = amount;
-        this.date = date;
+    }
+
+    public Long getAtmId() {
+        return atmId;
     }
 
     public String getCardNumber() {
@@ -30,7 +34,4 @@ public final class WithdrawCashCommand implements Command {
         return amount;
     }
 
-    public DateTime getDate() {
-        return date;
-    }
 }

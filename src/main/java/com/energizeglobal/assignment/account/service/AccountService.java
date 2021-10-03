@@ -1,7 +1,5 @@
 package com.energizeglobal.assignment.account.service;
 
-import com.energizeglobal.assignment.account.domain.Account;
-
 import java.math.BigDecimal;
 
 /**
@@ -10,12 +8,8 @@ import java.math.BigDecimal;
  */
 public interface AccountService {
 
-    Account getByAccountId(Long accountId);
+    void addAmountById(BigDecimal amount, Long accountId);
 
-    Account getByAccountNumber(String accountNumber);
-
-    BigDecimal getBalance(Long accountId);
-
-    BigDecimal getBalance(String accountNumber);
+    void subtractAmountById(BigDecimal amount, Long accountId);
 
 }

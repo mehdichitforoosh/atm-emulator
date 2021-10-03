@@ -20,18 +20,16 @@ import com.energizeglobal.assignment.card.domain.Card;
 import com.energizeglobal.assignment.card.service.CardService;
 import com.energizeglobal.assignment.common.Command;
 import com.energizeglobal.assignment.exception.ValidationException;
+import com.energizeglobal.assignment.security.AtmUser;
 import com.energizeglobal.assignment.user.domain.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +43,7 @@ import java.util.concurrent.Callable;
  */
 @RestController
 @RequestMapping("/api/atm")
-@Api(value = "ATM Controller", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(value = "ATM Controller for interacting", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AtmController {
 
     private static final Logger logger = LoggerFactory.getLogger(AtmController.class);
@@ -71,7 +69,7 @@ public class AtmController {
     public Callable<ResponseEntity<?>> authenticate(@RequestBody final AuthenticationJsonObject jsonObject) {
         logger.info("authenticate card ...");
         return () -> {
-            AuthenticateCommand command = new AuthenticateCommand(jsonObject.getCardNumber(), jsonObject.getPin());
+            AuthenticateCommand command = new AuthenticateCommand(jsonObject.getCardNumber(), jsonObject.getPin(), jsonObject.getAtmId());
             validate(command);
             String jwtToken = atmService.getToken(command);
             return ResponseEntity.ok(new AuthenticatedJsonObject(jwtToken));
@@ -85,8 +83,8 @@ public class AtmController {
         return () -> {
             // Get card number from security context
             UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-            UserDetails userDetails = (UserDetails) authenticationToken.getPrincipal();
-            String cardNumber = userDetails.getUsername();
+            AtmUser atmUser = (AtmUser) authenticationToken.getPrincipal();
+            String cardNumber = atmUser.getUsername();
             // Retrieve card entity
             Card card = cardService.getByCardNumber(cardNumber);
             Account account = card.getAccount();
@@ -108,8 +106,8 @@ public class AtmController {
         return () -> {
             // Get card number from security context
             UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-            UserDetails userDetails = (UserDetails) authenticationToken.getPrincipal();
-            String cardNumber = userDetails.getUsername();
+            AtmUser atmUser = (AtmUser) authenticationToken.getPrincipal();
+            String cardNumber = atmUser.getUsername();
             // Retrieve card entity
             Card card = cardService.getByCardNumber(cardNumber);
             Account account = card.getAccount();
@@ -124,12 +122,11 @@ public class AtmController {
         return () -> {
             // Get card number from security context
             UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-            UserDetails userDetails = (UserDetails) authenticationToken.getPrincipal();
-            String cardNumber = userDetails.getUsername();
-            // Get current time
-            DateTime currentDateTime = DateTime.now(DateTimeZone.UTC);
+            AtmUser atmUser = (AtmUser) authenticationToken.getPrincipal();
+            String cardNumber = atmUser.getUsername();
+            Long atmId = atmUser.getAtmId();
             // Add validation and service calls
-            DepositCashCommand command = new DepositCashCommand(cardNumber, jsonObject.getAmount(), currentDateTime);
+            DepositCashCommand command = new DepositCashCommand(atmId, cardNumber, jsonObject.getAmount());
             validate(command);
             atmService.deposit(command);
             return ResponseEntity.ok(null);
@@ -143,12 +140,11 @@ public class AtmController {
         return () -> {
             // Get card number from security context
             UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-            UserDetails userDetails = (UserDetails) authenticationToken.getPrincipal();
-            String cardNumber = userDetails.getUsername();
-            // Get current time
-            DateTime currentDateTime = DateTime.now(DateTimeZone.UTC);
+            AtmUser atmUser = (AtmUser) authenticationToken.getPrincipal();
+            String cardNumber = atmUser.getUsername();
+            Long atmId = atmUser.getAtmId();
             // Add validation and service calls
-            WithdrawCashCommand command = new WithdrawCashCommand(cardNumber, jsonObject.getAmount(), currentDateTime);
+            WithdrawCashCommand command = new WithdrawCashCommand(atmId, cardNumber, jsonObject.getAmount());
             validate(command);
             atmService.withdraw(command);
             return ResponseEntity.ok(null);
@@ -162,12 +158,11 @@ public class AtmController {
         return () -> {
             // Get card number from security context
             UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-            UserDetails userDetails = (UserDetails) authenticationToken.getPrincipal();
-            String cardNumber = userDetails.getUsername();
-            // Get current time
-            DateTime currentDateTime = DateTime.now(DateTimeZone.UTC);
+            AtmUser atmUser = (AtmUser) authenticationToken.getPrincipal();
+            String cardNumber = atmUser.getUsername();
+            Long atmId = atmUser.getAtmId();
             // Add validation and service calls
-            TransferCashCommand command = new TransferCashCommand(jsonObject.getAmount(), cardNumber, jsonObject.getToCardNumber(), currentDateTime);
+            TransferCashCommand command = new TransferCashCommand(atmId, jsonObject.getAmount(), cardNumber, jsonObject.getToCardNumber());
             validate(command);
             atmService.transfer(command);
             return ResponseEntity.ok(null);

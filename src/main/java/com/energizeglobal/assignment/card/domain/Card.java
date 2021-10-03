@@ -9,6 +9,7 @@ import javax.persistence.*;
 /**
  * @author Mehdi Chitforoosh
  * @since 1.0.0
+ * Card JPA entity
  */
 @Entity
 @Table(name = "cards")
@@ -24,7 +25,8 @@ public class Card {
     @Column(name = "expiration_date", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime expirationDate;
-    //todo add try on error
+    @Column(name = "try_with_error", nullable = false)
+    private Integer tryWithError;
     @Column(name = "active", nullable = false)
     private Boolean active;
     @OneToOne
@@ -65,6 +67,14 @@ public class Card {
 
     public void setExpirationDate(DateTime expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public Integer getTryWithError() {
+        return tryWithError;
+    }
+
+    public void setTryWithError(Integer tryWithError) {
+        this.tryWithError = tryWithError;
     }
 
     public Boolean getActive() {

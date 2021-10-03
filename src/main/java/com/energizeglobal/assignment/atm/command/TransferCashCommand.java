@@ -12,16 +12,20 @@ import java.math.BigDecimal;
  */
 public final class TransferCashCommand implements Command {
 
+    private final Long atmId;
     private final BigDecimal amount;
     private final String fromCardNumber;
     private final String toCardNumber;
-    private final DateTime date;
 
-    public TransferCashCommand(BigDecimal amount, String fromCardNumber, String toCardNumber, DateTime date) {
+    public TransferCashCommand(Long atmId, BigDecimal amount, String fromCardNumber, String toCardNumber) {
+        this.atmId = atmId;
         this.amount = amount;
         this.fromCardNumber = fromCardNumber;
         this.toCardNumber = toCardNumber;
-        this.date = date;
+    }
+
+    public Long getAtmId() {
+        return atmId;
     }
 
     public BigDecimal getAmount() {
@@ -36,7 +40,4 @@ public final class TransferCashCommand implements Command {
         return toCardNumber;
     }
 
-    public DateTime getDate() {
-        return date;
-    }
 }

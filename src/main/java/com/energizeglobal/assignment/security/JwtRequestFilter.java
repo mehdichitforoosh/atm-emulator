@@ -16,6 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author Mehdi Chitforoosh
+ * @since 1.0.0
+ */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
@@ -40,7 +44,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                Object claimObject = jwtTokenUtil.getClaimFromToken(jwtToken, "atmId");
+                Long atmId = Long.valueOf(claimObject.toString());
+                AtmUser atmUser = new AtmUser(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities(), atmId);
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(atmUser, null, atmUser.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }

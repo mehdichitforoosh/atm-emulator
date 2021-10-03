@@ -16,7 +16,6 @@ public class ValidationException extends RuntimeException {
     private final Errors errors;
     private final List<FieldError> fieldErrors;
 
-
     public ValidationException(String objectName, String field, String code) {
         this.errors = null;
         this.fieldErrors = new ArrayList<>();

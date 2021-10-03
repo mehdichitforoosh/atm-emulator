@@ -44,20 +44,27 @@ public class CardServiceImpl implements CardService {
     }
 
     /**
-     * Find card by account id
+     * Add try with error to card
      *
-     * @param accountId account id
-     * @return card
-     * @throws EmptyResultDataAccessException if card doesn't exist
+     * @param cardNumber
      */
     @Override
-    @Transactional(readOnly = true)
-    public Card getByAccountId(Long accountId) {
-        logger.info("find one card by " + accountId);
-        Card card = cardRepository.findByAccountId(accountId);
-        if (card != null) {
-            return card;
-        }
-        throw new EmptyResultDataAccessException("card is empty.", 1);
+    @Transactional
+    public void addTryWithErrorByCardNumber(String cardNumber) {
+        logger.info("add try with error by " + cardNumber);
+        cardRepository.addTryWithErrorByCardNumber(cardNumber);
+    }
+
+    /**
+     * Set active status on card
+     *
+     * @param active
+     * @param cardNumber
+     */
+    @Override
+    @Transactional
+    public void setActiveByCardNumber(Boolean active, String cardNumber) {
+        logger.info("set active " + active + " by " + cardNumber);
+        cardRepository.setActiveByCardNumber(active, cardNumber);
     }
 }

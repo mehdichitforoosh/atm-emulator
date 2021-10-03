@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 /**
  * @author Mehdi Chitforoosh
  * @since 1.0.0
+ * Account JPA entity
  */
 @Entity
 @Table(name = "accounts")

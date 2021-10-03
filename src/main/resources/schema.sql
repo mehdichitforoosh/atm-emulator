@@ -57,6 +57,7 @@ CREATE TABLE cards
   card_number character varying(16) NOT NULL,
   expiration_date timestamp without time zone NOT NULL,
   pin character varying(4) NOT NULL,
+  try_with_error integer NOT NULL,
   active boolean NOT NULL,
   account_id bigint,
   CONSTRAINT cards_pkey PRIMARY KEY (id),

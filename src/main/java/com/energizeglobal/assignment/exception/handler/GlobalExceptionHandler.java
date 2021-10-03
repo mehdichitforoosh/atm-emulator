@@ -2,6 +2,7 @@ package com.energizeglobal.assignment.exception.handler;
 
 import com.energizeglobal.assignment.common.json.ErrorArrayJsonObject;
 import com.energizeglobal.assignment.common.json.ErrorJsonObject;
+import com.energizeglobal.assignment.exception.CardBlockedException;
 import com.energizeglobal.assignment.exception.ValidationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
@@ -36,7 +37,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * We are using basePackages attribute of @ControllerAdvice to limit the controller classes
+ * using basePackages attribute of @ControllerAdvice to limit the controller classes
  *
  * @author Mehdi Chitforoosh
  * @since 1.0.0
@@ -51,6 +52,19 @@ public class GlobalExceptionHandler {
     @Autowired
     public GlobalExceptionHandler(MessageSourceAccessor messageSource) {
         this.messageSource = messageSource;
+    }
+
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    @ExceptionHandler(CardBlockedException.class)
+    @ResponseBody
+    public ErrorJsonObject handleCardBlockedException(CardBlockedException ex) {
+        logger.error("CardBlockedException handler executed", ex);
+        String message = messageSource.getMessage("CardBlockedException", new Object[]{});
+        List<ErrorArrayJsonObject> arrayJsonObjectList = new ArrayList<ErrorArrayJsonObject>();
+        ErrorArrayJsonObject arrayJsonObject = new ErrorArrayJsonObject("CardBlockedException", message);
+        arrayJsonObjectList.add(arrayJsonObject);
+        ErrorJsonObject errorJsonObject = new ErrorJsonObject(HttpStatus.FORBIDDEN.value(), message, arrayJsonObjectList);
+        return errorJsonObject;
     }
 
     @ResponseStatus(value = HttpStatus.FORBIDDEN)

@@ -10,6 +10,8 @@ public interface CardService {
 
     Card getByCardNumber(String cardNumber);
 
-    Card getByAccountId(Long accountId);
+    void addTryWithErrorByCardNumber(String cardNumber);
+
+    void setActiveByCardNumber(Boolean active, String cardNumber);
 
 }
