@@ -9,7 +9,8 @@ At this time, the ATM provides the people good services especially the people ca
 2. Install [Docker Compose](https://docs.docker.com/compose/install/)
 3. Clone [Git URL](https://github.com/mehdichitforoosh/atm-emulator.git)
 4. `cd atm-emulator`
-5. `$./cicd.sh`
+5. `chmod +x cicd.sh`   
+6. `$./cicd.sh`
 
 ## How to run on local
 1. Install Java 11
