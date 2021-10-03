@@ -44,4 +44,4 @@ volumes:
 
 networks:
   default:
-    name: services-network-02
+    name: services-network-01

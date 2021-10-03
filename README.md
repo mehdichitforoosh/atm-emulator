@@ -12,6 +12,9 @@ At this time, the ATM provides the people good services especially the people ca
 5. `chmod +x cicd.sh`   
 6. `$./cicd.sh`
 
+## How to stop Docker Compose
+1. `docker-compose down -v`
+
 ## How to run on local
 1. Install Java 11
 2. Install Maven > 3.3.1

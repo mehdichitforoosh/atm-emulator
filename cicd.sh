@@ -22,7 +22,4 @@ echo -e "Build images \e[92mdone\e[0m"
 docker-compose up -d --force-recreate --remove-orphans
 echo -e "Run containers \e[92mdone\e[0m"
 
-rm -rf ../atm-emulator/
-echo -e "Delete directory \e[92mdone\e[0m"
-
 exit
