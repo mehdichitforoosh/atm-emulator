@@ -1,16 +1,16 @@
-#ATM Emulator
+# ATM Emulator
 
 ATM is a part of our life activity, which helps us in day transactions and business. An automated teller machine (ATM) is a computerized telecommunications instrument that provides the clients of a financial institution with access to financial transactions in a public space without the need for a cashier, human clerk or bank teller.
 
 At this time, the ATM provides the people good services especially the people can get money at any time. We need the ATM system because not all the bank branches are open all days of the week, and some of the customers may not in a situation, they can visit the bank every time, and they want to withdraw money or deposit money for emergency cases.
 
-##How to run on Docker
+## How to run on Docker
 1. Install [Docker Engine](https://docs.docker.com/engine/install/)
 2. Install [Docker Compose](https://docs.docker.com/compose/install/)
 3. Clone [Git URL](https://github.com/mehdichitforoosh/atm-emulator.git)
 4. `$./cicd.sh`
 
-##How to run on local
+## How to run on local
 1. Clone [Git URL](https://github.com/mehdichitforoosh/atm-emulator.git)
 2. Install Java 11
 3. Install Maven > 3.3.1
