@@ -12,7 +12,7 @@ pipeline {
                             $class: 'GitSCM',
                             branches: [[name: '*/master']],
                             doGenerateSubmoduleConfigurations: false,
-                            extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'RelativeTargetDirectory', relativeTargetDir: '/atm-emulator']],
+                            extensions: [[$class: 'CleanBeforeCheckout']],
                             submoduleCfg: [],
                             userRemoteConfigs: [[url: 'https://github.com/mehdichitforoosh/atm-emulator.git']]
                         ])
@@ -20,14 +20,11 @@ pipeline {
                 )
             }
         }
-        stage('Deploy Development Environment') {
+        stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh 'ls'
-                sh 'docker-compose --version'
                 sh 'docker-compose build'
                 sh 'docker-compose up -d --force-recreate --remove-orphans'
-                sh 'docker-compose ps --services'
             }
         }
     }
