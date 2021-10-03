@@ -22,7 +22,7 @@ At this time, the ATM provides the people good services especially the people ca
 4. `cd atm-emulator`
 5. `mvn spring-boot:run`
 
-If you want to run server locally, change the database url in `src/main/resources/application.yml` from `pgsql-db-01` to `localhost`.
+If you want to run server locally, change the **Postgresql** database url in `src/main/resources/application.yml` from `pgsql-db-01` to `localhost`.
 
 Spring Boot automatically create the schema and initialize it with sample data.
 
