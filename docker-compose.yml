@@ -39,7 +39,6 @@ services:
 
 volumes:
   maven-home:
-    name: maven-home
   postgres-data:
 
 networks:
