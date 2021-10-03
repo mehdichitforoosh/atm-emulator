@@ -12,10 +12,11 @@ At this time, the ATM provides the people good services especially the people ca
 5. `$./cicd.sh`
 
 ## How to run on local
-1. Clone [Git URL](https://github.com/mehdichitforoosh/atm-emulator.git)
-2. Install Java 11
-3. Install Maven > 3.3.1
-4. `mvn spring-boot:run`
+1. Install Java 11
+2. Install Maven > 3.3.1
+3. Clone [Git URL](https://github.com/mehdichitforoosh/atm-emulator.git)
+4. `cd atm-emulator`
+5. `mvn spring-boot:run`
 
 If you want to run server locally, change the database url in `src/main/resources/application.yml` from `pgsql-db-01` to `localhost`.
 

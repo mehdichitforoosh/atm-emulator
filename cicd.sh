@@ -14,11 +14,6 @@ echo -e "\e[32m${BANNER_TEXT}\e[0m"
 # project name
 COMPOSE_PROJECT_NAME="atm-emulator"
 
-cd atm-emulator || exit
-CURRENT_DIRECTORY=$(pwd)
-
-echo -e "Change current directory to [${CURRENT_DIRECTORY}] \e[92mdone\e[0m"
-
 echo "Start docker containers for project [${COMPOSE_PROJECT_NAME}] ..."
 
 docker-compose build
